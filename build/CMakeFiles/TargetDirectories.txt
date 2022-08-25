@@ -1,0 +1,3 @@
+/root/workspace/rawdb/build/CMakeFiles/rebuild_cache.dir
+/root/workspace/rawdb/build/CMakeFiles/rawdb.dir
+/root/workspace/rawdb/build/CMakeFiles/edit_cache.dir

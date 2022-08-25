@@ -1,0 +1,11 @@
+
+namespace RawDB;
+
+table flatObj {
+    commd: string;
+    db: string;
+    key: string;
+    value: string;
+}
+
+root_type flatObj;

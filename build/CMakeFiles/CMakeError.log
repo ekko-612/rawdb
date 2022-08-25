@@ -1,0 +1,92 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /root/workspace/rawdb/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fc32b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fc32b.dir/build.make CMakeFiles/cmTC_fc32b.dir/build
+gmake[1]: Entering directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fc32b.dir/src.c.o
+/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_fc32b.dir/src.c.o -c /root/workspace/rawdb/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_fc32b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fc32b.dir/link.txt --verbose=1
+/usr/bin/cc -rdynamic CMakeFiles/cmTC_fc32b.dir/src.c.o -o cmTC_fc32b 
+CMakeFiles/cmTC_fc32b.dir/src.c.o: In function `main':
+src.c:(.text+0x2d): undefined reference to `pthread_create'
+src.c:(.text+0x39): undefined reference to `pthread_detach'
+src.c:(.text+0x45): undefined reference to `pthread_cancel'
+src.c:(.text+0x56): undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_fc32b.dir/build.make:99: cmTC_fc32b] Error 1
+gmake[1]: Leaving directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_fc32b/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /root/workspace/rawdb/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_52f3f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_52f3f.dir/build.make CMakeFiles/cmTC_52f3f.dir/build
+gmake[1]: Entering directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_52f3f.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_52f3f.dir/CheckFunctionExists.c.o -c /usr/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_52f3f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52f3f.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_52f3f.dir/CheckFunctionExists.c.o -o cmTC_52f3f  -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_52f3f.dir/build.make:99: cmTC_52f3f] Error 1
+gmake[1]: Leaving directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_52f3f/fast] Error 2
+
+
+
+Performing C++ SOURCE FILE Test StdFilesystem_NO_EXPLICIT_LINK failed with the following output:
+Change Dir: /root/workspace/rawdb/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c32ac/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c32ac.dir/build.make CMakeFiles/cmTC_c32ac.dir/build
+gmake[1]: Entering directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c32ac.dir/src.cxx.o
+/usr/bin/c++ -DStdFilesystem_NO_EXPLICIT_LINK  -std=gnu++17 -o CMakeFiles/cmTC_c32ac.dir/src.cxx.o -c /root/workspace/rawdb/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_c32ac
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c32ac.dir/link.txt --verbose=1
+/usr/bin/c++  -std=gnu++17 -rdynamic CMakeFiles/cmTC_c32ac.dir/src.cxx.o -o cmTC_c32ac 
+CMakeFiles/cmTC_c32ac.dir/src.cxx.o: In function `std::filesystem::__cxx11::path::path<char [6], std::filesystem::__cxx11::path>(char const (&) [6], std::filesystem::__cxx11::path::format)':
+src.cxx:(.text._ZNSt10filesystem7__cxx114pathC2IA6_cS1_EERKT_NS1_6formatE[_ZNSt10filesystem7__cxx114pathC5IA6_cS1_EERKT_NS1_6formatE]+0x5e): undefined reference to `std::filesystem::__cxx11::path::_M_split_cmpts()'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_c32ac.dir/build.make:99: cmTC_c32ac] Error 1
+gmake[1]: Leaving directory '/root/workspace/rawdb/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c32ac/fast] Error 2
+
+
+Source file was:
+#if __cplusplus >= 201703L && __has_include(<filesystem>)
+#include <filesystem>
+namespace filesystem = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace filesystem = std::experimental::filesystem;
+#endif
+
+int main() {
+    filesystem::path path("/root");
+    (void)path;
+}
+
